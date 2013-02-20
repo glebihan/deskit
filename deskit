@@ -7,7 +7,7 @@ import optparse
 if __name__ == "__main__":
     optparser = optparse.OptionParser()
     optparser.add_option("--share-dir", dest = "share_dir", default = "/usr/share")
-    optparser.add_option("--theme", dest = "theme")
+    optparser.add_option("--theme", dest = "theme", default = "default")
     optparser.add_option("--test", dest = "test", action = "store_true")
     options, args = optparser.parse_args()
     
