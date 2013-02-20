@@ -6,6 +6,20 @@ body{
     font-family: Santana;
 }
 
+#left_column{
+    position: absolute;
+    width: 460px;
+    left: 10px;
+    top: 30px;
+}
+
+#left_column .desktop_box{
+    width: 100%;
+    margin-top: 10px;
+    font-size: 10pt;
+    font-family: Santana;
+}
+
 #right_column{
     position: absolute;
     width: 460px;

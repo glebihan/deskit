@@ -55,6 +55,9 @@ class Deskit(object):
         
         self._box_id = 0
         self._boxes_config = {
+            "left_column": [
+                "rss-feed"
+            ],
             "right_column": [
                 "system-monitor",
                 "weather"
