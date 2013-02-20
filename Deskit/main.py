@@ -17,7 +17,8 @@ class DeskitWindow(gtk.Window):
         
         if not self._application.options.test:
             self.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DESKTOP)
-            self.set_size_request(1600, 900)
+            screen = gtk.gdk.screen_get_default()
+            self.set_size_request(screen.get_width(), screen.get_height())
         else:
             self.fullscreen()
         self.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse("#000000"))
