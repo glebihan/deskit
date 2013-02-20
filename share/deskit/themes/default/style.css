@@ -1,0 +1,60 @@
+body{
+    background: #000000 url(file:///home/glebihan/Pictures/Wallpapers/Wallpapers-room_com___Ancient_Apprehencion_by_dnb-nOise_1600x1200.jpg) no-repeat center center;
+    color: #FFFFFF;
+    height: 900px;
+    font-size: 10pt;
+    font-family: Santana;
+}
+
+#right_column{
+    position: absolute;
+    width: 460px;
+    right: 10px;
+    top: 30px;
+}
+
+#right_column .desktop_box{
+    width: 100%;
+    margin-top: 10px;
+    font-size: 10pt;
+    font-family: Santana;
+}
+
+.desktop_box{
+    opacity: 0.7;
+}
+
+.box_title{
+    padding-left: 8px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    font-size: 12pt !important;
+}
+
+
+#sf_downloads{
+    margin-right: 10px;
+    margin-top: 10px;
+    width: 450px;
+    height: 350px;
+}
+#sf_downloads_content_wrapper{
+    padding: 5px;
+}
+#sf_downloads_content_wrapper > iframe{
+    height: 340px;
+    width: 440px;
+}
+
+#weather{
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+#browser{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1600px;
+    height: 900px;
+}

@@ -1,0 +1,112 @@
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery("#cpu_usage_0", "#box_${box_id}$").progressbar();
+        jQuery("#cpu_usage_1", "#box_${box_id}$").progressbar();
+        jQuery("#cpu_usage_2", "#box_${box_id}$").progressbar();
+        jQuery("#cpu_usage_3", "#box_${box_id}$").progressbar();
+        jQuery("#cpu_usage_4", "#box_${box_id}$").progressbar();
+        jQuery("#cpu_usage_5", "#box_${box_id}$").progressbar();
+        jQuery("#cpu_usage_6", "#box_${box_id}$").progressbar();
+        jQuery("#cpu_usage_7", "#box_${box_id}$").progressbar();
+        jQuery("#ram_usage_bar", "#box_${box_id}$").progressbar();
+        
+        ${connector}$.connect("cpu_usage_update", function(data){
+            jQuery("#cpu_usage_" + data.cpu, "#box_${box_id}$").progressbar("value", data.usage);
+        });
+        ${connector}$.connect("ram_usage_update", function(data){
+            jQuery("#ram_usage_bar", "#box_${box_id}$").progressbar("value", data.usage);
+        });
+        ${connector}$.connect("uptime_update", function(data){
+            jQuery("#system_info_uptime", "#box_${box_id}$").html(data);
+        });
+    });
+</script>
+<style type="text/css">
+    #box_${box_id}$ span.cpu_usage_bar, #box_${box_id}$ span.ram_usage_bar{
+        width: 100%;
+        height: 10px;
+        display: block;
+    }
+    
+    #box_${box_id}$ span.system_info{
+        white-space: nowrap;
+    }
+    #box_${box_id}$ .system_info_label{
+        font-weight: bold;
+        white-space: nowrap;
+    }
+</style>
+<table width="100%">
+    <tr valign="top">
+        <td width="50%">
+            <table width="100%">
+                <tr valign="bottom">
+                    <td class="system_info_label">Hostname</td>
+                    <td><span class="system_info">${hostname}$</span></td>
+                </tr>
+                <tr valign="bottom">
+                    <td class="system_info_label">Kernel</td>
+                    <td><span class="system_info">${kernel_version}$</span></td>
+                </tr>
+                <tr valign="bottom">
+                    <td class="system_info_label">Uptime</td>
+                    <td><span class="system_info" id="system_info_uptime"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <div id="clock_wrapper">
+                            <ul id="clock">	
+                                <li id="sec"></li>
+                                <li id="hour"></li>
+                                <li id="min"></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td width="50%">
+            <table width="100%">
+                <tr>
+                    <td class="system_info_label">CPU 0</td>
+                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_0"></span></td>
+                </tr>
+                <tr>
+                    <td class="system_info_label">CPU 1</td>
+                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_1"></span></td>
+                </tr>
+                <tr>
+                    <td class="system_info_label">CPU 2</td>
+                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_2"></span></td>
+                </tr>
+                <tr>
+                    <td class="system_info_label">CPU 3</td>
+                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_3"></span></td>
+                </tr>
+                <tr>
+                    <td class="system_info_label">CPU 4</td>
+                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_4"></span></td>
+                </tr>
+                <tr>
+                    <td class="system_info_label">CPU 5</td>
+                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_5"></span></td>
+                </tr>
+                <tr>
+                    <td class="system_info_label">CPU 6</td>
+                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_6"></span></td>
+                </tr>
+                <tr>
+                    <td class="system_info_label">CPU 7</td>
+                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_7"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="system_info_label">RAM</td>
+                    <td width="100%"><span class="ram_usage_bar" id="ram_usage_bar"></span></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,14 @@
+#! /usr/bin/python
+# -*- coding=utf-8 -*-
+
+from Deskit.main import Deskit
+import optparse
+
+if __name__ == "__main__":
+    optparser = optparse.OptionParser()
+    optparser.add_option("--share-dir", dest = "share_dir", default = "/usr/share")
+    optparser.add_option("--theme", dest = "theme")
+    optparser.add_option("--test", dest = "test", action = "store_true")
+    options, args = optparser.parse_args()
+    
+    Deskit(options).run()
