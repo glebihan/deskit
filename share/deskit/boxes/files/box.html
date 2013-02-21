@@ -6,6 +6,7 @@
             var label = params.basename;
             if (label.length > 20) label = label.substring(0, 17) + "...";
             var icon = jQuery("<li class='file'></li>");
+            icon.attr("title", params.basename);
             jQuery("<img src='"+params.icon+"'/>").appendTo(icon);
             jQuery("<br/>").appendTo(icon);
             jQuery("<span class='label'></span>").html(label).appendTo(icon);
