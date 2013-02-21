@@ -5,10 +5,27 @@
         ${init_scripts}$
         
         ${css_files_includes}$
+        
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                jQuery("#files_zone").css("width", (jQuery("#right_column").offset().left - jQuery("#files_zone").offset().left - 10) + "px");
+                jQuery("#files_zone").css("height", (${screen_height}$ - 80) + "px");
+                
+                jQuery("#left_column").mouseenter(function(event){
+                    jQuery("#left_column").animate({left: 0});
+                });
+                jQuery("#left_column").mouseleave(function(event){
+                    jQuery("#left_column").animate({left: -450});
+                });
+            });
+        </script>
     </head>
     <body>
         <div id="left_column">
             ${boxes,left_column}$
+        </div>
+        <div id="files_zone">
+            ${boxes,files_zone}$
         </div>
         <div id="right_column">
             ${boxes,right_column}$

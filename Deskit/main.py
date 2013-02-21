@@ -8,6 +8,7 @@ import sys
 import urlparse
 import urllib
 import logging
+import json
 from DesktopBox import DesktopBox
 
 class DeskitWindow(gtk.Window):
@@ -27,12 +28,28 @@ class DeskitWindow(gtk.Window):
         self.add(self._webview)
         
         self.connect("delete_event", lambda w,e: gtk.main_quit())
+        self._webview.connect("navigation-requested", self._on_navigation_requested)
     
     def set_html(self, html):
         self._webview.load_html_string(html, "file:///")
     
     def execute_script(self, script):
         self._webview.execute_script(script)
+    
+    def _on_navigation_requested(self, webview, frame, request):
+        uri = request.get_uri()
+        if frame == webview.get_main_frame() and uri.startswith("connector://"):
+            url_parts = urlparse.urlparse(uri)
+            box_id = int(url_parts.netloc)
+            qs = urlparse.parse_qs(url_parts.query)
+            method_name = qs["method"][0]
+            if "params" in qs and len(qs["params"]) == 1 and qs["params"][0] != "":
+                params = json.loads(qs["params"][0])
+            else:
+                params = None
+            self._application.call_box_connector_method(box_id, method_name, params)
+            return webkit.NAVIGATION_RESPONSE_IGNORE
+        return webkit.NAVIGATION_RESPONSE_ACCEPT
 
 class Deskit(object):
     def __init__(self, options):
@@ -58,13 +75,16 @@ class Deskit(object):
             "left_column": [
                 "rss-feed"
             ],
+            "files_zone": [
+                "files"
+            ],
             "right_column": [
                 "system-monitor",
                 "weather"
             ]
         }
-        self._boxes = {
-        }
+        self._boxes = {}
+        self._boxes_by_id = {}
     
     def _load_desktop(self):
         template_file = os.path.join(self.theme_path, "index.html")
@@ -112,6 +132,10 @@ class Deskit(object):
                     res += "var connector%d = new Connector(%d);\n" % (box.box_id, box.box_id)
             res += "</script>\n"
             return res
+        if element == "screen_height":
+            return str(gtk.gdk.screen_get_default().get_height())
+        if element == "screen_width":
+            return str(gtk.gdk.screen_get_default().get_width())
             
         print element, params
         return ""
@@ -124,6 +148,7 @@ class Deskit(object):
             for box_name in self._boxes_config[zone]:
                 box = self._load_box(box_id, box_name)
                 if box:
+                    self._boxes_by_id[box_id] = box
                     self._boxes[zone].append(box)
                     box_id += 1
     
@@ -163,3 +188,7 @@ class Deskit(object):
     
     def execute_script(self, script):
         self._window.execute_script(script)
+    
+    def call_box_connector_method(self, box_id, method_name, params):
+        box = self._boxes_by_id[box_id]
+        box.call_connector_method(method_name, params)

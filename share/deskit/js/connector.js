@@ -13,6 +13,12 @@ Connector.prototype = {
         this._event_callbacks[event_name].push(callback);
     },
     
+    call: function(method_name, params){
+        var str_params = "";
+        if (params) str_params = encodeURIComponent(JSON.stringify(params));
+        window.location = "connector://" + this._box_id + "?method=" + method_name + "&params=" + str_params;
+    },
+    
     emit: function(event_name, data){
         if (event_name in this._event_callbacks){
             for (var i in this._event_callbacks[event_name]){

@@ -9,8 +9,9 @@ body{
 #left_column{
     position: absolute;
     width: 460px;
-    left: 10px;
+    left: -450px;
     top: 30px;
+    z-index: 2;
 }
 
 #left_column .desktop_box{
@@ -18,6 +19,7 @@ body{
     margin-top: 10px;
     font-size: 10pt;
     font-family: Santana;
+    opacity: 1 !important;
 }
 
 #right_column{
@@ -32,6 +34,24 @@ body{
     margin-top: 10px;
     font-size: 10pt;
     font-family: Santana;
+}
+
+#files_zone{
+    position: absolute;
+    top: 40px;
+    left: 20px;
+}
+
+#files_zone .desktop_box{
+    width: 100%;
+    height: 100%;
+    opacity: 1 !important;
+    background: rgba(0, 0, 0, 0); !important;
+    border: none !important;
+}
+
+#files_zone .box_title{
+    display: none;
 }
 
 .desktop_box{

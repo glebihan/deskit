@@ -12,6 +12,12 @@ class BaseConnector(object):
     def _init(self):
         pass
     
+    def start(self):
+        pass
+    
+    def stop(self):
+        pass
+    
     def _emit(self, signal_name, param = None):
         self._deskit.execute_script("connector%d.emit(\"%s\", %s);" % (self._box.box_id, signal_name, json.dumps(param)))
     

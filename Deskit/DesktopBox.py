@@ -93,3 +93,7 @@ class DesktopBox(object):
     def stop_connector(self):
         if self._connector:
             self._connector.stop()
+    
+    def call_connector_method(self, method_name, params):
+        if self._connector and hasattr(self._connector, method_name) and callable(getattr(self._connector, method_name)):
+            getattr(self._connector, method_name)(params)
