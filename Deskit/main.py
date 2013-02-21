@@ -62,7 +62,8 @@ class Deskit(object):
         self._required_js_libs = [
             "file://" + urllib.pathname2url(os.path.join(self.share_dir, "deskit", "js", "connector.js")),
             "http://code.jquery.com/jquery-1.9.1.js",
-            "http://code.jquery.com/ui/1.10.1/jquery-ui.js"
+            "http://code.jquery.com/ui/1.10.1/jquery-ui.js",
+            "http://cdn.craig.is/js/mousetrap/mousetrap.min.js?88c23"
         ]
         
         self._required_css_files = [
