@@ -95,16 +95,26 @@ class CPUUsageWatcher(object):
             fields = line.split()
             if len(fields) == 12 and fields[2] != "CPU":
                 cpu, usage = fields[2:4]
-                self._callback(cpu, float(usage))
+                return cpu, float(usage)
         except:
             pass
         
     def _watch_usage(self):
         line = self._read_usage_line()
         while line:
-            self._parse_usage_line(line)
+            data = self._parse_usage_line(line)
+            if data:
+                self._callback(data[0], data[1])
             line = self._read_usage_line()
         return True
+    
+    def count_cpus(self):
+        res = 0
+        for line in commands.getoutput("mpstat -P ALL").splitlines():
+            data = self._parse_usage_line(line)
+            if data and data[0] != "all":
+                res += 1
+        return res
     
     def start(self):
         self._start_watcher()
@@ -154,5 +164,7 @@ class Connector(BaseConnector):
             return commands.getoutput("hostname")
         if element == "kernel_version":
             return commands.getoutput("uname -r")
+        if element == "nb_cpus":
+            return str(self._cpu_usage_watcher.count_cpus())
             
         return None

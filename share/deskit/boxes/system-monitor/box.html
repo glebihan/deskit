@@ -1,13 +1,11 @@
 <script type="text/javascript">
     jQuery(document).ready(function(){
-        jQuery("#cpu_usage_0", "#box_${box_id}$").progressbar();
-        jQuery("#cpu_usage_1", "#box_${box_id}$").progressbar();
-        jQuery("#cpu_usage_2", "#box_${box_id}$").progressbar();
-        jQuery("#cpu_usage_3", "#box_${box_id}$").progressbar();
-        jQuery("#cpu_usage_4", "#box_${box_id}$").progressbar();
-        jQuery("#cpu_usage_5", "#box_${box_id}$").progressbar();
-        jQuery("#cpu_usage_6", "#box_${box_id}$").progressbar();
-        jQuery("#cpu_usage_7", "#box_${box_id}$").progressbar();
+        var bar;
+        for (var i = ${nb_cpus}$-1; i >= 0; i--){
+            bar = jQuery("<tr><td class=\"system_info_label\">CPU "+i+"</td><td width=\"100%\"><span class=\"cpu_usage_bar\" id=\"cpu_usage_"+i+"\"></span></td></tr>");
+            jQuery("#bars_wrapper", "#box_${box_id}$").prepend(bar);
+            jQuery("#cpu_usage_"+i, "#box_${box_id}$").progressbar();
+        }
         jQuery("#ram_usage_bar", "#box_${box_id}$").progressbar();
         
         ${connector}$.connect("cpu_usage_update", function(data){
@@ -66,39 +64,7 @@
             </table>
         </td>
         <td width="50%">
-            <table width="100%">
-                <tr>
-                    <td class="system_info_label">CPU 0</td>
-                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_0"></span></td>
-                </tr>
-                <tr>
-                    <td class="system_info_label">CPU 1</td>
-                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_1"></span></td>
-                </tr>
-                <tr>
-                    <td class="system_info_label">CPU 2</td>
-                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_2"></span></td>
-                </tr>
-                <tr>
-                    <td class="system_info_label">CPU 3</td>
-                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_3"></span></td>
-                </tr>
-                <tr>
-                    <td class="system_info_label">CPU 4</td>
-                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_4"></span></td>
-                </tr>
-                <tr>
-                    <td class="system_info_label">CPU 5</td>
-                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_5"></span></td>
-                </tr>
-                <tr>
-                    <td class="system_info_label">CPU 6</td>
-                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_6"></span></td>
-                </tr>
-                <tr>
-                    <td class="system_info_label">CPU 7</td>
-                    <td width="100%"><span class="cpu_usage_bar" id="cpu_usage_7"></span></td>
-                </tr>
+            <table width="100%" id="bars_wrapper">
                 <tr>
                     <td colspan="2">&nbsp;</td>
                 </tr>
