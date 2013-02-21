@@ -5,28 +5,39 @@
         ${connector}$.connect("add_file", function(params){
             var label = params.basename;
             if (label.length > 20) label = label.substring(0, 17) + "...";
-            var icon = jQuery("<div class='file'></div>");
+            var icon = jQuery("<li class='file'></li>");
             jQuery("<img src='"+params.icon+"'/>").appendTo(icon);
             jQuery("<br/>").appendTo(icon);
             jQuery("<span class='label'></span>").html(label).appendTo(icon);
             icon.appendTo("#container_${box_id}$");
+            //~ jQuery("#container_${box_id}$").selectable({filter: "div.file"});
         });
+        
+        jQuery("#container_${box_id}$").selectable();
     });
 </script>
 <style type="text/css">
     #container_${box_id}${
         height: 100%;
         overflow: hidden;
+        list-style-type: none;
     }
-    #container_${box_id}$ div.file{
+    #container_${box_id}$ li.file{
         margin: 10px;
+        padding: 3px;
         float: left;
         text-align: center;
         width: 100px;
         height: 100px;
         overflow: hidden;
     }
+    #container_${box_id}$ .ui-selecting{
+        background: #FECA40;
+    }
+    #container_${box_id}$ .ui-selected{
+        background: #F39814;
+        color: white;
+    }
 </style>
-<div id="container_${box_id}$">
-    
-</div>
+<ul id="container_${box_id}$">
+</ul>
