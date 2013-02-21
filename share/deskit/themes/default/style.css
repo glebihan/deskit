@@ -44,31 +44,3 @@ body{
     padding-bottom: 2px !important;
     font-size: 12pt !important;
 }
-
-
-#sf_downloads{
-    margin-right: 10px;
-    margin-top: 10px;
-    width: 450px;
-    height: 350px;
-}
-#sf_downloads_content_wrapper{
-    padding: 5px;
-}
-#sf_downloads_content_wrapper > iframe{
-    height: 340px;
-    width: 440px;
-}
-
-#weather{
-    margin-top: 10px;
-    margin-right: 10px;
-}
-
-#browser{
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 1600px;
-    height: 900px;
-}
