@@ -60,6 +60,14 @@ class DesktopBox(object):
             return "connector%d" % self.box_id
         if element == "box_id":
             return str(self.box_id)
+        if element == "box_content":
+            box_filename = os.path.join(self.box_path, "box.html")
+            f = open(box_filename)
+            box_content = f.read()
+            f.close()
+            return box_content
+        if element == "box_title":
+            return self._box_title
         
         if self._connector != None:
             res = self._connector.render_element(element, *params)
@@ -69,16 +77,14 @@ class DesktopBox(object):
         return self._deskit._render_element(element, *params)
     
     def render(self):
-        box_filename = os.path.join(self.box_path, "box.html")
-        f = open(box_filename)
-        res = f.read()
+        theme_box_filename = os.path.join(self._deskit.theme_path, "box.html")
+        f = open(theme_box_filename)
+        box_html = f.read()
         f.close()
         
-        res = self._replace_vars(res)
+        box_html = self._replace_vars(box_html)
         
-        res = "<div class='%s' id='box_%d'><div class='%s'>%s</div>%s</div>" % (self._box_div_class, self.box_id, self._box_title_class, self._box_title, res)
-        
-        return res
+        return box_html
     
     def start_connector(self):
         if self._connector:
