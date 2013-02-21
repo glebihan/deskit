@@ -7,14 +7,18 @@
             if (label.length > 20) label = label.substring(0, 17) + "...";
             var icon = jQuery("<li class='file'></li>");
             icon.attr("title", params.basename);
+            icon.attr("filename", params.filename);
             jQuery("<img src='"+params.icon+"'/>").appendTo(icon);
             jQuery("<br/>").appendTo(icon);
             jQuery("<span class='label'></span>").html(label).appendTo(icon);
             icon.appendTo("#container_${box_id}$");
-            //~ jQuery("#container_${box_id}$").selectable({filter: "div.file"});
+            
+            icon.dblclick(function(event){
+                ${connector}$.call("open_file", {filename: jQuery(this).attr("filename")});
+            });
         });
         
-        jQuery("#container_${box_id}$").selectable();
+        jQuery("#container_${box_id}$").selectable({cancel: '.ui-selected'});
     });
 </script>
 <style type="text/css">

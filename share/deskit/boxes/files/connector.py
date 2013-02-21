@@ -24,3 +24,7 @@ class Connector(BaseConnector):
         else:
             icon_filename = gtk.icon_theme_get_default().lookup_icon("gtk-file", 48, 0).get_filename()
         self._emit("add_file", {"filename": filename, "basename": os.path.split(filename)[1], "icon": "file://" + urllib.pathname2url(icon_filename)})
+    
+    def open_file(self, params):
+        if os.fork() == 0:
+            os.execvp("xdg-open", ("", params["filename"]))
