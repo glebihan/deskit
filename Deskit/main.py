@@ -28,28 +28,27 @@ class DeskitWindow(gtk.Window):
         self.add(self._webview)
         
         self.connect("delete_event", lambda w,e: gtk.main_quit())
-        self._webview.connect("navigation-requested", self._on_navigation_requested)
+        self._webview.connect("resource-request-starting", self._on_resource_request_starting)
     
-    def set_html(self, html):
-        self._webview.load_html_string(html, "file:///")
-    
-    def execute_script(self, script):
-        self._webview.execute_script(script)
-    
-    def _on_navigation_requested(self, webview, frame, request):
+    def _on_resource_request_starting(self, webview, frame, resource, request, response):
         uri = request.get_uri()
-        if frame == webview.get_main_frame() and uri.startswith("connector://"):
+        if uri.startswith("http://connector/"):
+            request.set_uri("about:blank")
             url_parts = urlparse.urlparse(uri)
-            box_id = int(url_parts.netloc)
             qs = urlparse.parse_qs(url_parts.query)
+            box_id = int(qs["box_id"][0])
             method_name = qs["method"][0]
             if "params" in qs and len(qs["params"]) == 1 and qs["params"][0] != "":
                 params = json.loads(qs["params"][0])
             else:
                 params = None
             self._application.call_box_connector_method(box_id, method_name, params)
-            return webkit.NAVIGATION_RESPONSE_IGNORE
-        return webkit.NAVIGATION_RESPONSE_ACCEPT
+    
+    def set_html(self, html):
+        self._webview.load_html_string(html, "file:///")
+    
+    def execute_script(self, script):
+        self._webview.execute_script(script)
 
 class Deskit(object):
     def __init__(self, options):

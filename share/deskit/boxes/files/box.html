@@ -1,7 +1,5 @@
 <script type="text/javascript">
     jQuery(document).ready(function(){
-        ${connector}$.call("initiate");
-        
         ${connector}$.connect("add_file", function(params){
             var label = params.basename;
             if (label.length > 20) label = label.substring(0, 17) + "...";
@@ -14,19 +12,19 @@
             icon.appendTo("#container_${box_id}$");
             
             icon.dblclick(function(event){
-                ${connector}$.call("open_files", {filenames: [jQuery(this).attr("filename")]});
+                ${connector}$.call("open_file", {filename: jQuery(this).attr("filename")});
             });
         });
         
         jQuery("#container_${box_id}$").selectable({cancel: '.ui-selected'});
         
         Mousetrap.bind("enter", function(event){
-            var selected_files = new Array();
             jQuery("#container_${box_id}$").find("li.file.ui-selected").each(function(index){
-                selected_files.push(jQuery(this).attr("filename"));
+                ${connector}$.call("open_file", {filename: jQuery(this).attr("filename")});
             });
-            if (selected_files.length > 0) ${connector}$.call("open_files", {filenames: selected_files});
         });
+        
+        ${connector}$.call("initiate");
     });
 </script>
 <style type="text/css">

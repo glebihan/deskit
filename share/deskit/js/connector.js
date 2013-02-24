@@ -16,7 +16,7 @@ Connector.prototype = {
     call: function(method_name, params){
         var str_params = "";
         if (params) str_params = encodeURIComponent(JSON.stringify(params));
-        window.location = "connector://" + this._box_id + "?method=" + method_name + "&params=" + str_params;
+        jQuery.get("http://connector/?box_id=" + this._box_id + "&method=" + method_name + "&params=" + str_params);
     },
     
     emit: function(event_name, data){
